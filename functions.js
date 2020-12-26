@@ -1,4 +1,4 @@
-function uyeKaydet() {
+function registerUser() {
     var kadi = $("#kadi").val();
     if (kadi != "") {
         var userKey = firebase.database().ref("users/").push().key; //Rastgele bir userkey gönderir.
@@ -8,16 +8,13 @@ function uyeKaydet() {
         });
         $("#girisEkrani").hide();
         $("#chatEkrani").show();
-        //------  EKLEYİNİZ ------- //
-        chatYukle();
-        // setInterval(function(){ $("#mesajAlani").html(""); chatYukle(); }, 900);
-        //------ EKLEYİNİZ ------- //
+        loadChat();
     } else {
         alert("Kullanıcı adını boş bırakmayınız!");
     }
 }
 
-function mesajGonder() {
+function sendMessege() {
     var mesaj = $("#mesaj").val();
     var kadi = $("#kadi").val();
     console.log(mesaj)
@@ -30,14 +27,14 @@ function mesajGonder() {
             from: kadi,
             tarih: tarih.getTime()
         });
-        //Otomatik olarak en alt kısma odakanılır
-        $("#mesaj").val(''); //Mesaj inputunu temizleyelim
+
+        $("#mesaj").val('');
     } else {
         alert("Lütfen boş alan bırakmayınız!");
     }
 }
 
-function chatYukle() {
+function loadChat() {
     var query = firebase.database().ref("chats");
     var kadi = $("#kadi").val();
     query.on('value', function (snapshot) {
